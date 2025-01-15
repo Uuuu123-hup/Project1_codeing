@@ -1,0 +1,5 @@
+def calculate_function(voltage, resistance):
+  calculate_function = voltage / resistance
+  print("calculate of voltage is ", '%.2f' % calculate_function, "Ω")
+
+calculate_function(500,5)
