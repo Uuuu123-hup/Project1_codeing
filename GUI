@@ -1,0 +1,77 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# ฟังก์ชันแปลงสกุลเงิน (อัตราแลกเปลี่ยนที่ใช้เป็นตัวอย่าง)
+def convert_currency():
+    try:
+        amount = float(entry_amount.get())  # รับจำนวนเงินที่กรอก
+        from_currency = combo_from_currency.get()
+        to_currency = combo_to_currency.get()
+
+        # ตั้งค่าอัตราแลกเปลี่ยน (ตัวอย่าง)
+        rates = {
+            "USD": 1,
+            "EUR": 0.85,
+            "JPY": 110.0,
+            "THB": 33.0
+        }
+
+        if from_currency == to_currency:
+            messagebox.showerror("Error", "สกุลเงินต้นทางและปลายทางต้องไม่เหมือนกัน")
+            return
+
+        # คำนวณการแปลงสกุลเงิน
+        converted_amount = amount * (rates[to_currency] / rates[from_currency])
+
+        # แสดงผลลัพธ์
+        label_result.config(text=f"{amount} {from_currency} = {converted_amount:.2f} {to_currency}")
+    
+    except ValueError:
+        messagebox.showerror("Error", "กรุณากรอกจำนวนเงินให้ถูกต้อง")
+
+# สร้างหน้าต่างหลัก
+root = tk.Tk()
+root.title("Currency Converter")
+
+# เลย์เอาต์หน้าต่าง
+frame = tk.Frame(root)
+frame.pack(padx=20, pady=20)
+
+# ป้ายชื่อ
+label_from_currency = tk.Label(frame, text="เลือกสกุลเงินต้นทาง:")
+label_from_currency.grid(row=0, column=0, padx=5, pady=5)
+
+# ตัวเลือกสกุลเงินต้นทาง
+combo_from_currency = tk.StringVar()
+combo_from_currency.set("USD")  # ค่าเริ่มต้น
+dropdown_from_currency = tk.OptionMenu(frame, combo_from_currency, "USD", "EUR", "JPY", "THB")
+dropdown_from_currency.grid(row=0, column=1, padx=5, pady=5)
+
+# ป้ายชื่อ
+label_to_currency = tk.Label(frame, text="เลือกสกุลเงินปลายทาง:")
+label_to_currency.grid(row=1, column=0, padx=5, pady=5)
+
+# ตัวเลือกสกุลเงินปลายทาง
+combo_to_currency = tk.StringVar()
+combo_to_currency.set("THB")  # ค่าเริ่มต้น
+dropdown_to_currency = tk.OptionMenu(frame, combo_to_currency, "USD", "EUR", "JPY", "THB")
+dropdown_to_currency.grid(row=1, column=1, padx=5, pady=5)
+
+# ป้ายจำนวนเงิน
+label_amount = tk.Label(frame, text="กรอกจำนวนเงิน:")
+label_amount.grid(row=2, column=0, padx=5, pady=5)
+
+# ช่องกรอกจำนวนเงิน
+entry_amount = tk.Entry(frame)
+entry_amount.grid(row=2, column=1, padx=5, pady=5)
+
+# ปุ่มคำนวณ
+button_convert = tk.Button(frame, text="คำนวณ", command=convert_currency)
+button_convert.grid(row=3, columnspan=2, pady=10)
+
+# ป้ายผลลัพธ์
+label_result = tk.Label(frame, text="ผลลัพธ์: ")
+label_result.grid(row=4, columnspan=2, pady=10)
+
+# เริ่มต้น GUI
+root.mainloop()
