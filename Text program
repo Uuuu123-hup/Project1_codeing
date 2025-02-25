@@ -1,0 +1,33 @@
+def convert_currency(amount, rate):
+    return amount * rate
+
+# แสดงเมนูให้ผู้ใช้เลือก
+print("โปรแกรมคำนวณแลกเปลี่ยนสกุลเงิน")
+print("1. USD -> THB")
+print("2. EUR -> THB")
+print("3. THB -> USD")
+print("4. THB -> EUR")
+choice = int(input("กรุณาเลือกตัวเลือก (1/2/3/4): "))
+
+# การตั้งอัตราแลกเปลี่ยน
+rates = {
+    1: 35.0,  # 1 USD = 35 THB
+    2: 37.5,  # 1 EUR = 37.5 THB
+    3: 1/35.0,  # 1 THB = 1/35 USD
+    4: 1/37.5,  # 1 THB = 1/37.5 EUR
+}
+
+# การคำนวณ
+if choice in rates:
+    amount = float(input("กรุณากรอกจำนวนเงิน: "))
+    converted_amount = convert_currency(amount, rates[choice])
+    if choice == 1:
+        print(f"{amount} USD = {converted_amount} THB")
+    elif choice == 2:
+        print(f"{amount} EUR = {converted_amount} THB")
+    elif choice == 3:
+        print(f"{amount} THB = {converted_amount} USD")
+    elif choice == 4:
+        print(f"{amount} THB = {converted_amount} EUR")
+else:
+    print("ตัวเลือกไม่ถูกต้อง!")
